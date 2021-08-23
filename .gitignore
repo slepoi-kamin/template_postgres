@@ -1,3 +1,3 @@
-venv/
+.venv/
 .idea/
-db_interface/.env
+.db_interface/.env
