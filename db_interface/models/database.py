@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from db_interface.conf import PG_PASS, PG_USER, host
-from sqlalchemy.orm import Session
+# from sqlalchemy.orm import Session
 
 engine = create_engine(f'postgresql://{PG_USER}:{PG_PASS}@{host}')
-session = Session(engine)
+# session = Session(engine)
 Base = declarative_base()
 
 
@@ -18,4 +18,3 @@ def clear_db():
 
 if __name__ == '__main__':
     pass
-
