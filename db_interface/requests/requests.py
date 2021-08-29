@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from db_interface.models.database import engine
 from db_interface.models.user import User
 from db_interface.models.tradesession import TradeSession as TS, TradeSession
-from sqlalchemy import and_, or_
+from sqlalchemy import or_
 
 
 def get_user(user_id):

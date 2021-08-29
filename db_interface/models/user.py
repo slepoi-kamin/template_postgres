@@ -13,12 +13,12 @@ class User(Base):
     state = Column(Boolean)
     session = relationship('TradeSession')
 
-    def __init__(self, user_id: int, user_name: str, chat_id: int, referal_id: int = None):
+    def __init__(self, user_id: int, user_name: str, chat_id: int, referral_id: int = None):
         self.state = False
         self.user_id = user_id
         self.user_name = user_name
         self.chat_id = chat_id
-        self.referral_id = referal_id
+        self.referral_id = referral_id
 
     def __repr__(self):
         info: str = f'{self.id} # User ' \

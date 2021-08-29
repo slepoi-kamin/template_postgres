@@ -1,12 +1,18 @@
 from faker import Faker
 from sqlalchemy.orm import Session
 import pickle
+
+from db_interface.models.async_database import init_models
 from db_interface.models.database import create_db, engine
 from db_interface.models.lesson import Lesson
 from db_interface.models.student import Student
 from db_interface.models.group import Group
 from db_interface.models.user import User
 from db_interface.models.tradesession import TradeSession
+
+
+async def create_async_db():
+    await init_models()
 
 
 def create_database(load_fake_data: bool = True, users: bool = True):
