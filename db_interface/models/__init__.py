@@ -4,6 +4,7 @@ from .lesson import Lesson
 from .user import User
 from .tradesession import TradeSession
 from .async_database import async_engine
+from .async_database import async_session
 from .database import engine
 from .database import clear_db
 from .database import create_db

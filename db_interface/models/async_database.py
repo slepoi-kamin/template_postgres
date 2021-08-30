@@ -6,7 +6,7 @@ from db_interface.conf import PG_PASS, PG_USER, host
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-async_engine = create_async_engine(f'postgresql+asyncpg://{PG_USER}:{PG_PASS}@{host}', echo=True)
+async_engine = create_async_engine(f'postgresql+asyncpg://{PG_USER}:{PG_PASS}@{host}')
 Base = declarative_base()
 async_session = sessionmaker(async_engine, class_=AsyncSession, expire_on_commit=False)
 
@@ -17,7 +17,15 @@ async def init_models():
         await conn.run_sync(Base.metadata.create_all)
 
 
-# async def get_session() -> AsyncSession:
-#     async with async_session() as session:
-#         yield session
+async def get_session() -> AsyncSession:
+    async with async_session() as session:
+        yield session
 
+
+# Dependency
+async def get_db():
+    db = async_session()
+    try:
+        yield db
+    finally:
+        await db.close()
