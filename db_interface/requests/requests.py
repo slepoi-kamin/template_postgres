@@ -62,4 +62,3 @@ def _get_table_info(table):
 if __name__ == '__main__':
     session = Session(engine)
     uid = session.query(User).get(2).user_id
-    pass

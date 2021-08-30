@@ -1,3 +1,9 @@
 .venv/
 .idea/
 .db_interface/.env
+venv/
+db_interface/__pycache__/
+db_interface/models/__pycache__/
+db_interface/requests/__pycache__/
+db_interface/schemas/__pycache__/
+db_interface/routes/__pycache__/

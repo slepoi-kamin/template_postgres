@@ -1,9 +1,6 @@
 import asyncio
-import pathlib
-
 import asyncpg
 import logging
-
 from db_interface.conf import host, PG_PASS, PG_USER
 
 

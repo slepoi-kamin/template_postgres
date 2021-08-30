@@ -1,13 +1,8 @@
-import asyncio
 import pickle
 from typing import List
-
-from sqlalchemy.ext.asyncio import AsyncSession
-from db_interface.models import async_engine
-from db_interface.models.async_database import async_session
 from db_interface.models import User
 from db_interface.models import TradeSession as TS
-from sqlalchemy import or_, func, select, insert
+from sqlalchemy import or_, func, select
 
 
 class DAL:
