@@ -11,6 +11,11 @@ from db_interface.schemas.schemas import TradeSessionSchema
 router = APIRouter()
 
 
+@router.get("/")
+async def get_users_sessions(service: DAL = Depends(get_dal)):
+    return {'hello': 'world'}
+
+
 @router.get("/user/get_users_trade_sessions_info")
 async def get_users_sessions(user_id: int, service: DAL = Depends(get_dal)) -> List[TradeSessionSchema]:
     sessions = await service.get_user_sessions(user_id)
