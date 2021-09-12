@@ -92,6 +92,11 @@ async def get_state(user_id: int, service: DAL = get_dal) -> bool:
     return await service.get_state(user_id)
 
 
+@dal(routes.get, '/user/get_global_user_id')
+async def get_global_user_id(user_id: int, service: DAL = get_dal) -> int:
+    return await service.get_id_in_users(user_id)
+
+
 app = web.Application()
 app.add_routes(routes)
 
