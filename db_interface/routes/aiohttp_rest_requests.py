@@ -1,6 +1,7 @@
 import inspect
 import json
 from aiohttp import web
+from db_interface.models import User
 from typing import List, Optional
 from db_interface.depends import get_dal
 from db_interface.schemas.schemas import TradeSessionSchema
@@ -39,15 +40,15 @@ def get_args_from_request(func, request):
 
 def create_attributes_dict_to_dump(obj):
     obj_attributes = vars(obj)
-    for key in obj_attributes:
-        if '_' == key[0]:
-            obj_attributes.pop(key)
-    return obj_attributes
+    keys_to_pop = [key for key in obj_attributes if '_' == key[0]]
+    return {k: v for k, v in obj_attributes.items() if k not in keys_to_pop}
 
 
 def dumps_to_json(objects):
     if isinstance(objects, list):
         objects = [create_attributes_dict_to_dump(obj) for obj in objects]
+    elif hasattr(objects, '__dict__'):
+        objects = create_attributes_dict_to_dump(objects)
     return json.dumps(objects)
 
 
@@ -71,14 +72,19 @@ def dal(decorator, decorator_args):
 
 
 @dal(routes.get, '/')
-async def get_users_sessions(service: DAL = get_dal):
+async def hello_world(service: DAL = get_dal):
     return {'hello': 'world'}
 
 
 @dal(routes.get, '/user/get_users_trade_sessions_info')
-async def get_users_sessions(user_id: int, service: DAL = get_dal):
+async def get_users_sessions(user_id: int, service: DAL = get_dal) -> List[TradeSessionSchema]:
     sessions = await service.get_user_sessions(user_id)
     return [TradeSessionSchema(id=s.id, name=s.name, user_id=s.user_id) for s in sessions]
+
+
+@dal(routes.get, '/user/get_user')
+async def get_user(user_id: int, service: DAL = get_dal) -> User:
+    return await service.get_user(user_id)
 
 
 app = web.Application()

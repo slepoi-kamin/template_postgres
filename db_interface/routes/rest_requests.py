@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @router.get("/")
-async def get_users_sessions(service: DAL = Depends(get_dal)):
+async def hello_world(service: DAL = Depends(get_dal)):
     return {'hello': 'world'}
 
 
