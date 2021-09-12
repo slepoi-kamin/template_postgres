@@ -102,6 +102,12 @@ async def get_table_partial(service: DAL = get_dal) -> List[User]:
     return await service.get_table_info(User)
 
 
+@dal(routes.post, '/user/add_user')
+async def add_user(user_id: int, user_name: str, chat_id: int,
+                   referral_id: Optional[int] = None, service: DAL = get_dal):
+    return await service.add_user(user_id, user_name, chat_id, referral_id)
+
+
 @dal(routes.patch, '/user/set_state')
 async def set_state(user_id: int, state: bool, service: DAL = get_dal):
     return await service.set_state(user_id, state)
