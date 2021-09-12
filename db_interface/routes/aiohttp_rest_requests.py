@@ -87,6 +87,11 @@ async def get_user(user_id: int, service: DAL = get_dal) -> User:
     return await service.get_user(user_id)
 
 
+@dal(routes.get, '/user/get_state')
+async def get_state(user_id: int, service: DAL = get_dal) -> bool:
+    return await service.get_state(user_id)
+
+
 app = web.Application()
 app.add_routes(routes)
 
