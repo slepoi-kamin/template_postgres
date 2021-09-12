@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from db_interface.routes.rest_requests import router
+from db_interface.routes.fastapi_rest_requests import router
 
 
 app = FastAPI()
@@ -13,4 +13,4 @@ async def startup():
 
 
 if __name__ == '__main__':
-    uvicorn.run("app:app", port=1112, host='127.0.0.1')
+    uvicorn.run("fastapi_app:app", port=1112, host='127.0.0.1')
