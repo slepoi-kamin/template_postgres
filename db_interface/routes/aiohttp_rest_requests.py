@@ -32,7 +32,7 @@ def get_args_from_request(func, request):
     query = request.query
     arg_types = get_args_kwargs_types(func)
     return {
-        k: arg_types[k](v)
+        k: (arg_types[k](v) if v != 'false' else False)
         for k, v in query.items()
         if k in arg_types
     }
@@ -52,9 +52,9 @@ def dumps_to_json(objects):
     return json.dumps(objects)
 
 
-def dal(decorator, decorator_args):
+def dal(decorator, *decorator_args, **decorator_kwargs):
     def actual_decorator(func):
-        @decorator(decorator_args)
+        @decorator(*decorator_args, **decorator_kwargs)
         async def wrapper(*args, **kwargs):
             default_kwargs = get_default_args(func)
             request = args[0]
@@ -100,6 +100,11 @@ async def get_global_user_id(user_id: int, service: DAL = get_dal) -> int:
 @dal(routes.get, '/user/get_table_partial')
 async def get_table_partial(service: DAL = get_dal) -> List[User]:
     return await service.get_table_info(User)
+
+
+@dal(routes.patch, '/user/set_state')
+async def set_state(user_id: int, state: bool, service: DAL = get_dal):
+    return await service.set_state(user_id, state)
 
 
 app = web.Application()
