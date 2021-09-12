@@ -97,6 +97,11 @@ async def get_global_user_id(user_id: int, service: DAL = get_dal) -> int:
     return await service.get_id_in_users(user_id)
 
 
+@dal(routes.get, '/user/get_table_partial')
+async def get_table_partial(service: DAL = get_dal) -> List[User]:
+    return await service.get_table_info(User)
+
+
 app = web.Application()
 app.add_routes(routes)
 
