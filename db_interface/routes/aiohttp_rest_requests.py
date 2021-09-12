@@ -113,6 +113,12 @@ async def set_state(user_id: int, state: bool, service: DAL = get_dal):
     return await service.set_state(user_id, state)
 
 
+@dal(routes.delete, '/session/delete')
+async def del_session(user_id: int, session_name: str, service: DAL = get_dal):
+    sessions_to_delete = await service.rm_session(user_id, session_name)
+    return [TradeSessionSchema(id=s.id, name=s.name, user_id=s.user_id) for s in sessions_to_delete]
+
+
 app = web.Application()
 app.add_routes(routes)
 
